@@ -19,12 +19,25 @@ lRUCache.get(1);    // return -1 (not found)
 lRUCache.get(3);    // return 3
 lRUCache.get(4);    // return 4
 """
+from collections import OrderedDict
+
 class LRUCache:
 
     def __init__(self, capacity: int):
-        
+        self.capacity = capacity
+        self.cache = OrderedDict() 
 
     def get(self, key: int) -> int:
-        
+        if key not in self.cache:
+            return -1 
+        self.cache.move_to_end(key) #最近使われたものとして末尾へ
+        return self.cache[key]
 
     def put(self, key: int, value: int) -> None:
+        if key in self.cache: #すでに存在する場合、末尾へ移動
+            self.cache.move_to_end(key)
+        self.cache[key] = value #値を更新or追加
+        
+        #容量を超えたら⇒一番古いキーを削除
+        if len(self.cache) > self.capacity:
+            self.cache.popitem(last=False)
