@@ -34,7 +34,7 @@ class Solution:
                 for i in range(start, len(candidates)):
                     combo.append(candidates[i])#結果を格納
                     backtrack(remaining - candidates[i],combo, i) #再帰呼び出し
-                    combo.pop() #バックトラック
+                    combo.pop() #バックトラック 直前に追加した要素を取り消す 一歩戻る処理
                                                 
                                                 
         backtrack(target, [], 0)
