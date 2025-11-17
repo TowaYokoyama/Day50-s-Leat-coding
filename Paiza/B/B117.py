@@ -79,3 +79,24 @@ for x in range(2, N + 1):
     prev_pos = pos[x]
 
 print(laps)
+
+
+N = int(input())
+A = [int(input()) for _ in range(N)]
+
+# ハッシュテーブル（車番 → 位置）
+pos = {}
+for i in range(N):
+    car = A[i]
+    pos[car] = i
+
+laps = 0
+prev_pos = pos[1]   # 車1の位置
+
+# 車番号 2 → N を順にチェック
+for x in range(2, N + 1):
+    if pos[x] < prev_pos:  # 順序逆転（追い越しが必要）
+        laps += 1
+    prev_pos = pos[x]      # 基準更新
+
+print(laps)
